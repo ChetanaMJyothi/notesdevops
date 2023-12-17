@@ -1,0 +1,254 @@
+1. Load Average?
+ is a metric used to measure the amount of computational work that a computer system is actively performing at any given time. It is a fundamental performance metric and is particularly important for servers and multi-user systems. Load average is typically expressed as three values, which represent the system load over the past 1, 5, and 15 minutes, respectively.
+ For example, a load average of 1.00 means the system is fully utilizing its available CPU core(s), and a load average of 2.00 indicates that the system's load is twice the capacity of its CPU core(s).
+Tools like the uptime and top 
+a load average of 1.00 means that the system's CPUs are fully utilized. If the load average is higher than the number of available CPU cores, it indicates that processes are waiting for CPU time and that there is a system load
+When the load average is consistently high, In such cases, system performance can degrade, leading to slower response times ,
+Administrators and users can monitor the load average to assess the system's performance and make decisions regarding resource allocation or scaling to ensure the system can handle its workload effectively. Tools like the uptime and top commands on Unix-like systems display the load average along with other system information.
+It is a part of the virtual memory system in linux. It provides a way to temporarily offload data from the computer's physical RAM to disk storage when the RAM is fully utilized. so swap space acts as an extension of the system's RAM and helps prevent the system from running out of memory
+ 
+ 2. To add a space between each character in a string in Linux, you can use the sed command. Here is an example command that adds a space between every 
+ character in a string:
+echo "string" | sed 's/./& /g'
+ 
+2. To find a file with higest size?
+find / -type f 2>/dev/null | xargs du -sh 2>/dev/null | sort -rh | head -1
+
+1. what are Environment variable?
+they are dynamic values that affect the way program runs. 
+ex PATH: Contains a list of directories where the system looks for executable files.
+
+2. Difference between bashrc and bash_profile?
+.bash_profile: This file is executed for login shells.
+.bashrc: This file is executed for non-login shells.
+
+3. what is sticky bit?
+The sticky bit is a permission attribute in Unix-like operating systems, including Linux. It is represented by the letter "t" in the permission bits of a directory and is used to control who can delete or rename files within that directory.
+When the sticky bit is set on a directory, it has the following implications:
+Only the owner of a file in that directory can delete or rename their own files, regardless of the directory's permissions.
+Other users (even if they have write permissions to the directory) cannot delete or rename files that do not belong to them. This is a security feature to prevent unauthorized users from tampering with or removing files owned by others in a shared directory.
+The sticky bit is often used on directories like /tmp to ensure that users can write files to the directory but cannot delete or modify files created by other users. This helps maintain a level of security and privacy within shared directories.
+You can set the sticky bit on a directory using the chmod command with the "+t" option, like this:
+
+chmod +t directory_name
+To remove the sticky bit, you can use the "-t" option:
+
+4. Daemon?
+Background process that perform network configuration, responding to USB devices, managing file system.
+
+5. DNS (Domain Name System)
+SCP- "Secure Copy Protocol"
+diff between scp and rsink
+
+6. Package managers?
+Red Hat Enterprise Linux (RHEL), CentOS, Amazon Linux: Yum
+Ubuntu,Debian,Microsoft Linux: apt
+Alpine Linux: apk
+SUSE Linux: zypper
+macOS: HomeBrew
+
+3. Differnce between jobs and process?
+PROCESS: A process is a running instance of a program within the operating system. 
+It's an independent entity that has its own memory space, resources, and unique process identifier (PID).
+Processes are created and managed by the operating system's kernel. 
+JOBS: Jobs are tasks or commands that are executed within a shell (like Bash) and managed by the shell's job control mechanisms.
+If you start multiple processes (commands) in the background within a shell session, each of them becomes a separate job within that shell session.
+
+4. Whitelisting?
+In Linux, whitelisting refers to the practice of specifying a list of approved entities, such as users, programs, IP addresses, or actions, 
+that are explicitly allowed to access certain resources or perform specific operations. 
+This method is used as a security measure to enhance system security by only permitting authorized entities and preventing unauthorized access or execution of programs.
+
+ASCII stands for "American Standard Code for Information Interchange."
+
+Escape sequences for your Linux shell?
+5. Scope resolution?
+ The scope resolution operator is :: It is used to access a global variable when there is a local variable with same name
+ using namespace std;
+ Ex:
+int x; // Global x
+ 
+int main()
+{
+int x = 10; // Local x
+cout << "Value of global x is " << ::x;
+cout << "\nValue of local x is " << x; 
+return 0;
+}
+
+5. What are IP tables?
+IPTables is a user-space utility on Linux systems used to configure and manage the rules of the firewall, 
+which is built into the Linux kernel. It is a powerful tool for managing packet filtering, network address translation (NAT), 
+and other aspects of network security and routing. IPTables allows users to define rules for incoming, outgoing, and forwarded network packets, 
+controlling how these packets are handled by the system.
+Packet Filtering: IPTables enables users to define rules that filter incoming, outgoing, and forwarded packets based on various criteria such as source IP address, 
+destination IP address, ports, protocols
+Firewall Rules: Users can create firewall rules using IPTables to allow or deny specific types of traffic. This can be useful for implementing security policies, 
+restricting access to certain services or ports, preventing unwanted connections, and protecting against various network attacks.
+
+To Extract a tar.gz Archive:
+   tar -xzvf archive.tar.gz
+-x: Extract files from an archive.
+-z: Use gzip to decompress the archive.
+-v: Verbose mode (optional, shows the extraction progress and details).
+-f: Specify the filename of the archive.
+
+To Create a tar.gz Archive:
+   tar -czvf archive.tar.gz /path/to/your/file_or_directory
+-c: Create a new archive.
+-z: Compress the archive using gzip.
+-v: Verbose mode (optional, shows the progress and details of archiving).
+-f: Specify the filename of the archive.
+
+To summarize:
+
+Using -z flag creates a compressed tar archive (.tar.gz).
+Omitting -z creates an uncompressed tar archive (.tar).
+It's important to choose the appropriate method based on whether you want the archive to be compressed or not.
+
+To execute a command every last day of month
+55 23 28-31 * * [[ "$(date --date=tomorrow +\%d)" == "01" ]] && myjob.sh
+
+1. kernel version?
+ hostnamectl
+ 
+ 2.ulimit command?
+ The ulimit command can be used to set or display resource limit for a user's session. Commonly managed resources include:
+
+File Size: Limits the size of files that can be created by the user.
+Core File Size: Controls the maximum size of core files created on crashes.
+CPU Time: Restricts the maximum amount of CPU time that a process can consume.
+Data Segments: Sets the maximum size of data segments a process can allocate.
+Open Files: Limits the number of file descriptors a process can have open at one time.
+Processes: Restricts the maximum number of simultaneous processes a user can have.
+Virtual memory
+File locks
+
+ ulimit -a:
+  
+ ulimit -u:
+  To display maximum users process or for showing maximum user process limit for the logged-in user.
+
+The soft limits are the limits which are allocated for actual processing of application or users while the 
+Hard limits are nothing but an upper bound to the values of soft limits. 
+
+3. where do we get log files?
+/var/log
+
+4. Differnce between Archieve and Compress?
+Compression:
+Purpose: Compression involves reducing the size of one or more files or data to save storage space or decrease transmission time over networks.
+Common compression tools include gzip, bzip2, zip, 7-Zip, xz
+Archieve:
+Purpose: Archiving involves combining multiple files or directories into a single file for easier storage, organization, and transportation.
+Common archiving tools include tar (Tape Archive), zip, rar
+
+5. Networking Commands?
+  
+Every system is connected to numerous different networks and systems through internal or external network channels. 
+These network settings often run into issues and affect the system’s working. Such network problems can be resolved using ‘networking commands.’ 
+
+Networking Commands
+The below mentioned commands are some of the most useful commands required to troubleshoot network problems and configure network settings.
+
+a. IPCONFIG
+  The IPCONFIG network command provides a comprehensive view of information regarding the IP address configuration of the device we are currently working on.
+b.  NSLOOKUP (dig)
+ We can access the information related to our system’s DNS server, i.e., domain name and IP address.  
+c. HOSTNAME
+   Gives private Ip address of the server
+d.  PING
+   it allows the user to check the connectivity of our system to another host.
+e.  TRACERT
+  Displays the path packets take to reach a destination. And also provides us with the “hop” count during transmission.
+  Using the number of hops and the hop IP address, we can troubleshoot network issues and identify the point of the problem during the transmission of the data packet.
+f.   NETSTAT 
+The Netstat command displays all the network connections in the device. The table shows detail about the connection protocol, 
+address, and the current state of the network.
+g.  ARP ( Address resolution protocol )
+  The ARP command is used to access the mapping structure of IP addresses to the MAC address. This provides us with a better understanding of the transmission of 
+  packets in the network channel
+h.  SYSTEMINFO
+  Using the SYSTEMINFO co mmand, we can access the system’s hardware and software details, such as processor data, booting data, Windows version, etc
+
+6.  fdisk?
+fdisk also known as format disk. It is used for creating and manipulating disk partition table
+-To Create space for new partitions.
+-Organizing space for new drives.
+-Re-organizing old drives.
+-Copying or Moving data to new disks(partitions).
+View All Disk Partitions: sudo fdisk -l
+
+7. wget?
+used to download files from the internet via various protocols, such as HTTP, HTTPS, FTP, and others. 
+
+8. What is bootloader?
+-The bootloader is a program that is responsible for loading the operating system kernel into memory.
+-Once we turn on our Linux machines the first thing that runs is the BIOS (Basic Input Output System). The BIOS is responsible for basic hardware initialization.
+-It checks for connected devices, searches for the MBR (Master Boot Record) in the BIOS boot menu.
+-The MBR is a small piece of information (512 bytes) that contains the bootloader program and disk partitioning information. After the MBR is run the bootloader
+begins to start. 
+-The bootloader is responsible for loading the Linux kernel into memory. Then kernel initialization phase  starts.
+
+GRUB: GRUB or Grand Unified Bootloader is one of the most popular and widely used bootloaders in Linux. It supports a wide range of operating systems,
+provides a user-friendly interface, GRUB supports features like dual-booting, customizable boot menus, and compatibility with various filesystems. 
+LILO: LILO can handle various disk layouts and supports multiple boot options. stable bootloader.
+BURG: brand-new universal loader, It offers graphical themes, animation effects, and advanced configuration options. BURG allows users to create visually 
+appealing boot menus and personalize them according to their preferences
+SYSLINUX: SYSLINUX is a lightweight bootloader designed primarily for systems using the FAT filesystem. It is commonly used for booting from USB drives, live CDs, 
+or for network booting,  compatibility with a wide range of hardware. 
+
+9. Telnet?
+Telnet is a network protocol used to establish a text-based, bidirectional interactive communication session between two computers or devices over a network. 
+It allows users to remotely access another device or server's command-line interface (CLI) or terminal.
+-Telnet protocol (TCP port 23 by default) to establish a connection between a client and a server.
+-Telnet transmits data, including usernames, passwords, and commands, in plain text without encryption. 
+
+10. Set Commands?
+ -x  Print commands and their arguments as they are executed.
+  -e  Exit immediately if a command exits with a non-zero status.
+ -a  Mark variables which are modified or created for export.
+      -b  Notify of job termination immediately.
+      -n  Read commands but do not execute them.
+	  -t  Exit after reading and executing one command.
+      -u  Treat unset variables as an error when substituting.
+      -v  Print shell input lines as they are read.
+ -C  If set, disallow existing regular files to be overwritten
+          by redirection of output.
+
+11. TCP : TCP is a connection-oriented protocol and employs a three-step handshake to establish a reliable connection between two devices. 
+This process ensures that both the sender and receiver are ready to exchange data. The TCP Three-Way Handshake operates as follows:
+SYN (Synchronize): 
+SYN-ACK (Synchronize-Acknowledge): 
+ACK (Acknowledge): 
+Applications: Web browsing (HTTP)
+File transfer (FTP, SFTP)
+Email (SMTP, IMAP, POP)
+Remote access (SSH, Telnet)
+Database access (MySQL, PostgreSQL)
+
+UDP is a connectionless protocol UDP operates on a "fire and forget" principle, where data is sent without ensuring reliability, ordering, 
+or acknowledgment. Each UDP packet is sent independently, and there's no acknowledgment of receipt or guaranteed delivery.
+Real-time streaming (VoIP, video conferencing)
+Online gaming (multiplayer games)
+DNS (Domain Name System) queries
+
+12.  Kernel version: hostnamectl
+
+13. What are server logs? 
+Server logs are files or records generated by a server that contain information about its activities, operations, events, errors, and interactions with other systems. 
+These logs are crucial for monitoring, troubleshooting, security analysis, and performance optimization of servers and applications.
+
+15. text editors?
+ Vi, Nano, Atom, Sublime
+ 
+ 16. Diff between Gracefully Forcefully?
+Gracefully terminate a process: - When you want to ensure that the process terminates cleanly and without leaving any corrupted data or orphaned resources.
+- When the process is not responding to requests and you need to shut it down without losing data.
+-have a chance to perform any necessary cleanup tasks, such as saving data to disk or closing open files. This helps to ensure that the process terminates cleanly 
+ and without leaving any corrupted data or orphaned resources.
+ 
+Forcefully terminate a process: -When the process is frozen or unresponsive and you need to shut it down immediately.
+-When the process is consuming too many resources and you need to free up those resources immediately.
+-The process will not have a chance to perform any cleanup tasks, which may lead to corrupted data or orphaned resources.
+

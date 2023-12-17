@@ -1,0 +1,192 @@
+1. Write a shell script to print arguments passed to the
+script in reverse order.
+Input: sh script.sh 2 5 3
+Output:
+3
+5
+2
+soln:-
+#!/bin/bash
+
+for ((i=$#; i>0; i-- )); do
+echo "${!i}"
+done
+------------------------------------------
+
+3.Write a script that monitors system performance
+and sends a mail notification with warning messages
+about resource usage like ram, disk usage every 24
+hours.
+soln:-
+#!/bin/bash
+
+echo "-----Disk Usage-----" >> content
+echo $(df -h) >> content
+echo -e "\n\n-----Ram Usage-----" >> content
+echo $(free -h) >> content
+
+mail -s "Warning about Disk, Ram usage" chetanamj@gmail.com < content
+rm content
+~
+----------------------------------------------
+
+4. Write a script to take backups of a directory as tar
+zip file every weekend and store them as versions
+[Example backup-1.tar.gz, backup-2.tar.gz].
+soln:-
+#!/bin/bash
+
+count=$(cat fileCounter)
+tar -czvf /home/ec2-user/assignment/versions/backup-$count.tar.gz /home/ec2-user/assignment/dir
+((count++))
+echo "$count" > fileCounter
++++++++++++++
+0 0 * * 00  sh /home/ec2-user/assignment/backupGenerator.sh
+++++++++++++++
+cat fileCounter
+1
+
+-----------------------------------------
+
+5. Write a script to find the files in a directory that
+were last modified more than 4 weeks ago and delete
+them, starting with the ones that consume the most
+space.
+soln:-
+#!/bin/bash
+
+echo "Enter path of Directory to search and delete files that were not used more than 1 month "
+read dirPath
+
+find $dirPath  -type f -mtime +30 | xargs du -h | sort -r | awk '{print $2}' | xargs rm
+---------------------------------------------
+
+6. Explain the difference between running a script with
+'./script' and running it with 'nohup ./script &'
+soln:-
+'./script' : This command executes the script in the foreground within the current shell session. When you run ./script, it starts the script in the foreground, 
+and the script's output (such as print statements, errors, etc.) will be displayed in the terminal where you initiated the script. 
+If you close the terminal or interrupt the script (e.g., with Ctrl+C), the script will terminate.
+nohup ./script &: This command runs the script in the background and detaches it from the current terminal session. 
+The nohup command stands for "no hang up," and it prevents the script from being terminated if the terminal session is closed. 
+The & symbol sends the process to the background, allowing you to continue using the terminal for other tasks while the script runs independently. 
+The output of the script might be redirected to a file named nohup.out in the current directory unless specified otherwise.
+Closing the terminal won't affect the execution of the script, and it will continue running until completion (unless it's explicitly terminated).
+--------------------------------------------
+
+7. Read an integer 'n'and generate the following pattern:
+1
+1 2
+1 2 3
+1 2 3 4
+up to 'n'rows.
+soln:-
+#!/bin/bash
+
+echo "Enter n"
+read n
+echo "-------"
+for ((i=1; i<=$n; i++)); do
+ for ((k=1; k<=$i; k++)); do
+  echo -n "$k "
+ done
+echo
+done
+-----------------------------------------------
+8. Write a script to display the contents of the file in reverse order without using tac command
+soln:-
+#!/bin/bash
+
+echo "enter file path "
+read file
+lineCount=$( wc -l $file | awk '{print$1}' )
+
+while [ "$lineCount" -ge 1 ]; do
+ res=$(awk -v row="$lineCount" 'NR==row' $file)
+ ((lineCount--))
+ echo $res
+done
+-----------------------------------
+9.Write a script to reverse a string using while loop
+Input: hello
+Output: olleh
+soln:-
+#!/bin/bash
+
+echo "Enter String"
+read word
+i=$(echo $word | wc -c)
+((i--))
+echo $i
+while [ $i -ge 0 ]; do
+ printf "${word:$i:1}"
+ ((i--))
+done
+echo
+-------------------------------------------
+10. Read an integer 'n' and generate the followingpattern:
+1
+2 3
+4 5 6
+7 8 9 10
+up to 'n'rows.
+soln:-
+#!/bin/bash
+
+echo "Enter n"
+read n
+numEle=1
+for ((i=1; i<=$n; i++)); do
+ for ((k=1; k<=$i; k++)); do
+  printf "$numEle %s"
+  ((numEle++))
+ done
+printf "\n"
+done
+---------------------------------------------
+11. Write a script that rename a file or directory by replacing its letters with lowercase from uppercase letters.
+Example: TEst.txt → test.txt
+soln:-
+#!/bin/bash
+
+echo "Enter a file name"
+read name
+fileName=$(echo "$name" | awk -F "/" '{print$NF}')
+val=$(echo "$fileName" | tr '[:upper:]' '[:lower:]')
+changedName=$(echo "$name" | sed s/$fileName/$val/g)
+if [ $val == $fileName ]; then
+ echo "-------------------------"
+ echo "Given file/directory name:$fileName is already in lower case "
+elif [ -f $name ] || [ -d $name ]; then
+ mv $name $changedName
+ echo "-------------------------"
+ echo "Renamed File/directory: $changedName"
+else
+ echo "Invalid Input, Please enter path of file/directory"
+fi
+--------------------------------------------
+
+12. Write a script that takes multiple inputs from the
+user as arguments and only prints the arguments if
+they are integers
+Input: sh script.sh abc 2 t5 4 efg ghi 34 67 1 2
+Output
+The integer arguments are:
+2
+4
+34
+67
+1
+2
+soln:-
+#!/bin/bash
+echo "-----------"
+for (( i=1; $i<=$#; i++ )); do
+  ans=$(echo ${!i} | grep -v '[[:alpha:]]')
+  if [ $? -eq 0 ]; then
+    echo $ans
+  fi
+done
+
+--------------------------------------------------------
+

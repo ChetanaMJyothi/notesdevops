@@ -1,0 +1,191 @@
+1. what is GIT?
+Global Information Tracker.
+Git is a distributed version control system that tracks changes in any set of computer files, usually used for coordinating work among programmers who are collaboratively 
+developing source code during software development. Git was originally authored by Linus Torvalds
+
+2. Similar to github?
+  GitLab, Bitbucket, GitBucket, AWS CodeCommit, Sourceforge, Launchpad
+
+3. Similar to Git?
+  Subversion, CVS, Mercurial
+
+4. What are advantages of Git?
+ -Track Changes
+ - Collaborate and share files
+ - Combine Changes from differnet Developers
+ 
+ 5. Git GUI's?
+ GitKraken, Github Desktop, Source Tree, Tower, Ungit
+ 
+ 6. what is Repo?
+ A Git Repo is a workspace which tracks and manges files within a folder
+ 
+ 7. what is commit?
+  It is a snapshot of changes in repo
+  
+  8. Git Ignore?
+  The files written inside gitignore will not be added to repo, any changes made to these files will not be 
+  recognized by git. Make changes toa file and run git status command , its display working tree clean
+  
+  9. To create and switch to new branch at a time?
+   git switch -c new_branch
+   
+   10. To delete a branch ?
+   git branch -d branch1 --> switch to different branch and then use this cmd
+  git branch -D branch1 --> If branch is not merged then use this cmd
+   
+   
+   11. Rename a branch?
+   git branch -m new_branchName
+   
+   12. Funny tricks of git
+    When we edit commited file and try to switch to new branch it throughs error to commit changes 
+	or stash it before switching branches and doesnt allow switching branch
+	
+	13. git config credential.helper store
+	 git push https://github.com/repo.git
+
+14. git reflog?
+git reflog is a command in Git that displays a log of reference updates in your repository. 
+It records the history of actions, including commits, checkouts, merges, rebases, and other changes that update the HEAD or move branches. 
+The reflog keeps track of where the HEAD and branch pointers have been, even if some of those changes are no longer visible in the current commit history.
+o/p
+a58acef HEAD@{31}: commit (cherry-pick): jk is craeted
+e02d43a HEAD@{45}: checkout: moving from main to br1
+c0a13b4 HEAD@{46}: checkout: moving from br1 to main
+e02d43a HEAD@{47}: commit: save filek in br1
+
+Username for 'https://github.com': <USERNAME>
+Password for 'https://USERNAME@github.com': <PASSWORD>
+
+ 14. git blame?
+ git blame: is used to track changes in a specific file, displaying line-by-line annotations to show which commit and author last modified each line.
+
+4fffe82a (Cloud User 2023-12-05 10:56:17 +0000 1) Hi
+4fffe82a (Cloud User 2023-12-05 10:56:17 +0000 2) this file is created to check 
+ 
+ 15. 3. how to modify a current commet
+ git commit --amend
+ 
+ 15. Deleting Specific Stashes:
+ git stash drop 
+ 
+ 16. add link to origin?
+ git remote add origin <link>
+	git push -u origin master/main
+ 
+ 16. To change origin name?
+ git remote rename <origin> <newName>
+ 
+ 17. How to list all the merged branches?
+ git branch --merged
+ 
+ 17. how to create main branch?
+ git init -b main
+ 
+19 How to delete remote branch?
+git push origin --delete <branchname> --> 
+  
+   18 git revert vs git reset vs git restore
+-git restore <file> to discard changes in working directory
+  
+  19. Git cherry-pick?
+  When git cherrypick is applied, the changes from the commit will not be in working/staging area , files will be directly commited.
+  After git cherry pick , apply git status, -->working tree clean
+  git cherry-pick -n de78abf --> -n, --no-commit, don't automatically commit, -n will bring changes to staging area.
+ 
+20. restore?
+  git restore <filename> --> to discard changes in working dir, this works only if file has been recognized by git
+  git restore --staged <filename> -->to remove file from staged area , but moves files to working dir
+or we can use checkout --> git checkout --<filename>
+
+21. Revert?
+-git revert HEAD~3
+  Revert the changes specified by the fourth last commit in HEAD and create a new commit with the reverted changes.
+  creates extra commit
+  used when branch is pushed to remote repo
+  
+ 22. reset?
+-git reset: Resets the current branch to a specified state, altering the commit history by moving the branch pointer.
+All commit above this commit ID will be deleted , changes will either come to working or staged area
+  git reset [options] <commit>	
+  soft: the file will come to tracked stage
+  mixed: the file will come to untracked stage/working area
+  hard: the file will be deleted
+ 
+ 23. git chekout <commit ID>
+ switch to that commit and all below Id's  will be present in this new branch HEAD will be detached and points to this commit ID, 
+ we can create a branch from this commit ID witll all iD's below it
+ 
+ git chekout <branchname> <filename>
+ Brings content of file from branchname to current branch, changes will be staged in current branch
+ 
+  git checkout <branchname>
+ To switch from current branch to other branch
+  
+  24. git diff 					--> gives difference between the file that has been previously commited before and is now edited and is in working dir
+         git diff --staged --> gives the diff between the file that has been previously commited and now edited and moved to staging area
+        git diff <branch1> <branch2> --> gives diff between the files content of same file within 2 branches
+		git diff <commit ID> <commit ID> --> gives diff between all the files content in between these 2 commits
+		
+ 24. Git clean?
+ git clean -f -d -->It removes all untracked files which are not recognized by git from current directory
+ 
+ 25. What are Git Orphan Branch?
+ git checkout --orphan <branch_name>
+ 
+ 26. Create a global .gitignore?
+ git config --global core.excludefile  ~/.gitignore_global
+ 
+ 19. Credential helper , to avoid entering username and token for git pull everytime?
+ git config --global credential.helper cache --> 
+			This option caches credentials in memory for a certain period of time (default is 15 minutes) after you've entered them
+ git config --global credential.helper store -->
+			This command configures Git to store credentials using a plain-text file on your local system.
+			--global sets configurations globally for the user
+ git config --global credential.helper manager -->
+			This option uses the Git credential manager to securely store credentials.
+ git config --local credential.helper store -->
+			The --local flag specifies that Git should use settings for the current repository only.
+ git config --global --unset credential.helper -->
+			To delete a data inside credential.helper 
+ 
+ 20. How to set username and email?
+ git config --global user.name "chetana"
+ git config --global user.email "chetanamj@gmail.com"
+ git config user.name	--> To see the user.name, 
+ git config user.email --> email
+ 
+ how to create bare repo?
+ --create  a empty repo using  in local directory: git init --bare
+     This will not have a .git folder , but files inside it will be present, we cant use git commands inside a bareRepo
+ --create a regular repo using in local dir: git init  
+ --now clone a path where bare repo is present: git clone /home/ec2-user/bare_repo
+ --now bare_repo will be created under regular_repo dir
+ -- cd into bare_repo
+ --now create a bare 
+ Error: git add . -->fatal: this operation must be run in a work tree
+
+index stage in git
+what does origin refers to
+Can you change the name Origin
+diff bet git log and git blame
+what is credential helper in Git
+.gitignore file
+Can you change the name Origin
+
+how do you fix a broken commit or modify a commit
+diff bet git clone and git fork
+git fork
+diff bet git stash pop and git stash apply
+diff bet git log and blame
+what are the diff scenarios where a merge conflict can occur
+diff types of git reset and differences between them
+What is a bare repository
+why we use git checkout command
+git bisect
+git push origin --delete branchname --> to delete remote branch
+
+linked copy and unlinked copy
+differences between .jar,.war and .ear files
+how to change origin name

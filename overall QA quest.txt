@@ -1,0 +1,85 @@
+1. How to increase swap space in Linux?
+Login as root.
+sudo su
+cd /var
+touch swapfile
+chmod 600 swapfile
+ls -la swapfile
+Use “dd” command to fill the swap file with 1 GB size --> dd if=/dev/zero of=/var/swapfile bs=1024k count=1000
+Now setup the swap file  --> mkswap /var/swapfile
+Enable the swap file  --> swapon /var/swapfile
+cat /proc/swaps
+Disable the swap file --> swapoff /var/swapfile 
+Delete the swap file --> rm /var/swapfile
+
+2. Can we change .m2 Folder?
+option 1: Set the M2_HOME Environment Variable:
+export M2_HOME=/path/to/custom/m2/directory
+option 2: <settings>
+  <localRepository>/path/to/custom/m2/directory</localRepository>
+</settings>
+
+3. What is hotfix?
+-A hotfix refers to a small, targeted patch or update designed to address a specific issue or problem in software. 
+-It's usually released as an urgent remedy to fix critical bugs, security vulnerabilities, or issues that are impacting the functionality or security of a software product.
+-In DevOps, a hotfix refers to a rapid corrective measure applied to a software system or application to resolve critical issues, bugs, security vulnerabilities, or operational 
+failures. It's a part of the continuous delivery and deployment practices, allowing teams to respond swiftly to urgent problems that require immediate attention.
+
+4. What is Artifatory?
+It serves as a central hub for managing software artifacts such as binaries, packages, libraries, Docker containers
+Artifactory plays a crucial role in modern software development practices by providing a central, organized, and secure repository for managing artifacts, 
+facilitating collaboration among development teams, and ensuring the efficiency and reliability of the software delivery pipeline.
+-It hosts artifacts, Its a place where artifacts are stored, Ex JFrog
+
+
+5. What is 2/2 Status Check?
+System status checks
+System status checks monitor the AWS systems on which your instance runs. 
+These checks detect underlying problems with your instance that require AWS involvement to repair. 
+When a system status check fails, you can choose to wait for AWS to fix the issue, or you can resolve it yourself. 
+For instances backed by Amazon EBS, you can stop and start the instance yourself, which in most cases results in the instance being migrated to a new host. 
+For Linux instances backed by instance store, you can terminate and replace the instance. For Windows instances, the root volume must be an Amazon EBS volume; 
+instance store is not supported for the root volume. Note that instance store volumes are ephemeral and all data is lost when the instance is stopped.
+
+The following are examples of problems that can cause system status checks to fail:
+Loss of network connectivity
+Loss of system power
+Software issues on the physical host
+Hardware issues on the physical host that impact network reachability
+If a system status check fails, we increment the StatusCheckFailed_System metric.
+
+Instance status checks
+Instance status checks monitor the software and network configuration of your individual instance. 
+Amazon EC2 checks the health of the instance by sending an address resolution protocol (ARP) request to the network interface (NIC). 
+These checks detect problems that require your involvement to repair. When an instance status check fails, you typically must address the problem yourself 
+(for example, by rebooting the instance or by making instance configuration changes).
+
+The following are examples of problems that can cause instance status checks to fail:
+Failed system status checks
+Incorrect networking or startup configuration
+Exhausted memory
+Corrupted file system
+Incompatible kernel
+If an instance status check fails, we increment the StatusCheckFailed_Instance metric.
+
+6. What are git hooks?
+All Git hooks are ordinary scripts that Git executes when certain events occur in the repository.
+Hooks reside in the .git/hooks directory of every Git repository. Git automatically populates this directory with example scripts when you initialize a repository. 
+Under .git/hooks these files will be present:
+applypatch-msg.sample       pre-push.sample
+commit-msg.sample           pre-rebase.sample
+post-update.sample          prepare-commit-msg.sample
+pre-applypatch.sample       update.sample
+pre-commit.sample
+.sample extension prevents them from executing by default. To “install” a hook, all you have to do is remove the .sample extension. Or, 
+if you’re writing a new script from scratch, you can simply add a new file matching one of the above filenames, minus the .sample extension.
+Ex: prepare-commit-msg hook. Remove the .sample extension from this script, and add the following to the file:
+#!/bin/sh
+echo "# Please include a useful commit message!" 
+You should now see this message in place of the default commit message every time you run git commit
+Pre-Commit:
+The pre-commit script is executed every time you run git commit before Git asks the developer for a commit message or generates a commit object.
+You can use this hook to inspect the snapshot that is about to be committed. 
+For example, you may want to run some automated tests that make sure the commit doesn’t break any existing functionality.
+
+/opt/tomcat/webapps

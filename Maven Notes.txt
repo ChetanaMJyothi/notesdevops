@@ -1,0 +1,48 @@
+Maven:
+
+It is not only a  build tool for java application, it is also project management tool which manages the complete build lifecycle. Maven has the capabilities to 
+extend the functionilty by adding plugins. 
+
+
+maven commands:
+mvn compile - used to compile source code
+mvn clean -  cleans the previous build files
+mvn test - run testing steps
+mvn test-compile - compile code fo testing source
+mvn package - creates artifacts
+mvn install -  deploys packages and stores them in local repo
+mvn deploy - artifacts are copied to remote repo
+
+what maven build lifecycle /what are maven phases
+1. Validate : Maven validates project is correct and necessary information is available in pom.xml
+2. Compile: compiles the source code(java)
+3. Test : Maven rund unit test cases on compiled. (Junit)
+4. Package: it takes source code which is compiled and generated packages in distribution format (.jar/.war/.ear)
+5. Integration Testing: Package is deployed in a environment where integration testing is done(selenium). 
+6. Verify: verfies whether the package is valid or not.
+7. Install: Installs package into local repository
+8. Deploy: publish the build to release environment
+
+
+Maven repositories:
+1. Local repository - is a folder which is created on same machine where we run mvn command(.m2)
+2. Central repository - repo is managed by maven community
+3. Remote repository - confined to a organisation
+
+Maven searched for dependencies(packages) in the following sequence:
+local
+central
+remote
+maven stops searching oncethe dependencies are found.
+
+
+Maven installation:
+maven - central repo -->https://repo.maven.apache.org/maven2/
+install java- https://computingforgeeks.com/how-to-install-java-11-openjdk-11-on-rhel-8/
+install maven-- https://tecadmin.net/install-apache-maven-on-centos/
+pom.xml example-- https://www.javatpoint.com/maven-pom-xml
+maven lifecycle --> https://www.geeksforgeeks.org/maven-lifecycle-and-basic-maven-commands/#:~:text=mvn%20clean%3A%20Cleans%20the%20project,Runs%20tests%20for%20the%20project.
+maven commands cheatsheet --> https://www.digitalocean.com/community/tutorials/maven-commands-options-cheat-sheet
+
+
+mvn install -Dmaven.test.skip=true --> To skip running mvn test 

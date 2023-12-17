@@ -1,0 +1,27 @@
+-An EAR file requires a fully Java Platform, Enterprise Edition (Java EE)- or Jakarta Enterprise Edition (EE)-compliant application server, such as WebSphere or JBoss,to run. 
+-A WAR file only requires a Java EE Web Profile-compliant application server to run
+-A JAR file only requires a Java installation.
+Basically, EAR files are a superset containing WAR files and JAR files
+---
+EAR files themselves must have an application.xml file contained within a folder named META-INF.
+A WAR file requires a web.xml file contained within a WEB-INF folder.
+Java files have neither of these requirements.
+
+Differenec between Maven and Ant?
+Maven: -pom.xml file.
+-It has a lifecycle.
+-It can self download the dependencies from a central repository for building projects.
+-It consists of reusable plugins.
+-It is less flexible and maintainable.
+-It creates reports.
+-It is not reliable.
+-It has more documentation.
+
+Ant: -build.xml file.
+-It does not have a lifecycle.
+-It has no built-in support for dependency management. 
+-It consists of scripts that are not reusable.
+-It is more flexible and maintainable.
+-It does not create reports.
+-It is more reliable than Maven.
+-It has less documentation.

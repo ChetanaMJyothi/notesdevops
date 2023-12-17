@@ -1,0 +1,17 @@
+1. What is DevOps?
+ Devops is a culture/practise that collaborates Development Team and Operation teams, It will improve speed and quality of software delivery process 
+ by automating developing, testing, deploying, maintaining processess.
+
+ 
+
+
+2. Differnet plugins i have come across?
+1. Build Authorization Token Root?
+Examples
+buildByToken/build?job=RevolutionTest&token=TacoTuesday
+
+2. Role based authorization strategy?
+3. fanin plugin --> To maintain upstream downstream jobs
+
+
+http://13.233.246.128:8080/buildByToken/build?job=demo_one&token=chetu
