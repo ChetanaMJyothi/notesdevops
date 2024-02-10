@@ -113,7 +113,378 @@ docker exec -it <container-id/container-name> /bin/sh -->To login to a container
 Assignment:
 Difference between attach and exec
 ----------------------------------------------------------------------------------------------------------
+Dockerfile:
 
+Default Name: Dockerfile
 
+Commands:
 
+docker build . --> To build a docker image with the Dockerfile
 
+docker build -t <image-name>:<image-tag> . --> To give a name and tag to custom docker image
+
+docker build -t <image-name>:<image-tag> -f <dockerfile-name> <dockerfile-path> --> To Build an image with different Dockerfile name and path
+----------------------------------------------------------------------------------------------------------
+Dockerfile Instructions:
+
+1. FROM:
+
+Syntax:
+
+FROM <image-name>:<tag>
+
+Example:
+
+FROM ubuntu
+FROM openjdk
+----------------------------------------------------------------------------------------------------------
+2. RUN:
+
+Syntax:
+
+RUN <Command>
+
+Example:
+
+RUN apt update
+RUN mkdir test
+RUN apt install git -y && apt install default-jre -y
+----------------------------------------------------------------------------------------------------------
+3. COPY:
+
+Syntax:
+
+COPY <host-machine-source-path> <container-destination-path>
+COPY --chown=<user>:<group> <host-machine-source-path> <container-destination-path>
+
+Example:
+
+COPY script.sh app/
+----------------------------------------------------------------------------------------------------------
+4. ADD:
+
+Syntax:
+
+ADD <host-machine-source-path> <container-destination-path>
+ADD --chown=<user>:<group> <host-machine-source-path> <container-destination-path>
+ADD <tar-archive-file> <container-destination-path>
+ADD <URL> <container-destination-path>
+
+Example:
+
+ADD script.sh app/
+ADD apache-tomcat-9.0.85.tar.gz zip/
+ADD https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.85/bin/apache-tomcat-9.0.85.tar.gz url/
+----------------------------------------------------------------------------------------------------------
+Assignment:
+
+Create a custom image using Dockerfile. That uses Ubuntu as Base Image, Clone a java git repo and creates a .jar/.war file
+----------------------------------------------------------------------------------------------------------
+5. CMD
+
+Syntax:
+
+CMD <command>
+
+Example:
+
+CMD ["sleep", "100"]
+CMD ["bash", "script.sh"]
+CDM ["java", "-jar", "app.jar"]
+----------------------------------------------------------------------------------------------------------
+6. ENTRYPOINT
+
+Syntax:
+
+ENTRYPOINT <command>
+
+Example:
+
+ENTRYPOINT ["sleep", "100"]
+ENTRYPOINT ["bash", "script.sh"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
+
+docker run --entrypoint="<command>" <image-name> --> To change the entrypoint
+----------------------------------------------------------------------------------------------------------
+Assignment:
+
+What happens when you give multiple CMD's and Entrypoints in Dockerfile
+
+1. 
+CMD <command>
+CMD <command>
+
+2. 
+ENTRYPOINT <command>
+ENTRYPOINT <command>
+
+3. 
+CMD <command>
+ENTRYPOINT <command>
+
+4.
+ENTRYPOINT <command>
+CMD <command>
+----------------------------------------------------------------------------------------------------------
+7. ENV
+
+Syntax:
+
+ENV <key>=<value>
+
+Example:
+
+ENV DB_NAME=mongo
+ENV DB_URL=mongo@test:37017 DB_USER=abc
+
+Commands:
+
+docker run --env <key>=<value> <image-name> --> To set environment variables during Docker run
+docker run --env-file <file-path> <image-name> --> To set environment variables during Docker run using a file
+----------------------------------------------------------------------------------------------------------
+8. ARG
+
+Syntax:
+
+ARG <variable>
+
+Example:
+
+ARG user
+RUN useradd $user
+
+Commands:
+
+docker build --build-arg <variable>=<value> <image-name> --> To pass the value to the argument variable used in Dockerfile
+----------------------------------------------------------------------------------------------------------
+Assignment:
+Learn about WORKDIR, EXPOSE, USER, SHELL
+----------------------------------------------------------------------------------------------------------
+Docker Push
+
+Image: docker.io/<user-account>/<repo-name>:<tag>
+
+1. Dockerhub
+
+Docker Hub is a service provided by Docker for finding and sharing Docker images. We can
+create repositories from which we can push and pull the docker images, allowing us to share
+container images within our team, organization, customers.
+
+Prerequisites:
+
+1. Create a Dockerhub Account
+2. Setup your Dockerhub Credentials in the local machine using docker login command
+3. Re tag the images to satisfy the naming convention of the Dockerhub Account
+
+Commands:
+
+docker login --> To setup the credentials for Dockerhub
+
+docker push <username>/<repo-name>:<tag> --> To push a Docker Image
+----------------------------------------------------------------------------------------------------------
+2. ECR
+
+Amazon ECR is a fully managed container registry offered as part of the AWS services.
+
+Prerequisites:
+
+1. Create a AWS Account and Setup the credentials of AWS by using AWS CLI
+2. Create an ECR Repo in AWS
+3. Re tag the images to satisfy the naming convention of the ECR Repo Account
+
+a. Using Session Token [12 Hours]
+
+aws ecr get-login-password \
+    --region ap-south-1 \
+| docker login \
+    --username AWS \
+    --password-stdin 227219889473.dkr.ecr.ap-south-1.amazonaws.com
+
+(or)
+
+aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 227219889473.dkr.ecr.ap-south-1.amazonaws.com
+
+b. ecr-credential helper
+
+sudo apt install amazon-ecr-credential-helper
+
+In .docker/config.json
+
+{
+	"credsStore": "ecr-login"
+}
+
+Repo Link: https://github.com/awslabs/amazon-ecr-credential-helper
+----------------------------------------------------------------------------------------------------------
+Docker Path: /var/lib/docker
+
+Volumes:
+
+1. Bind Mount:
+
+Syntax:
+
+docker run -v <host-path>:<container-path> <image-name>
+
+Example:
+
+docker run -p 8080:8080 -v /home/ubuntu/jenkins:/var/jenkins_home jenkins/jenkins
+----------------------------------------------------------------------------------------------------------
+2. Docker Volumes:
+
+Path: /var/lib/docker/volumes
+
+Syntax:
+
+docker run -v <docker-volume-name>:<container-path> <image-name>
+
+Example:
+
+docker run -p 8080:8080 -v jenkins:/var/jenkins_home jenkins/jenkins
+
+Commmands:
+
+docker volume ls --> To list the docker volumes
+docker volume create <volume-name> --> To create a Docker volume
+docker volume rm <volume-name> --> To remove a Docker volume
+----------------------------------------------------------------------------------------------------------
+Docker Prune:
+
+As we start working with Docker, it’s also easy to accumulate an excessive number of unused
+images, containers, and data volumes that clutter the output and consume disk space.
+Docker provides a single command that will help to clean up images, containers, volumes, and
+networks which are dangling
+
+Commands:
+
+docker system prune --> Removes all dangling images, Unused Networks and stopped containers
+
+docker image prune --> Removes all the dangling images
+docker image prune -a --> Removes all the unused images
+
+docker volume prune --> Removes all the unnamed/anonymous volumes
+docker volume prune -a --> Removes all the unused volumes
+
+docker network prune --> Removes all the unused networks
+----------------------------------------------------------------------------------------------------------
+Dangling Images:
+
+While creating images Docker will create intermediate images and container to create the
+final image, these are created temporarily by Docker and have no relationship with any tagged
+images and they don’t server any purpose but consume disk space.
+
+Any untagged and unused image in Docker is called as a Dangling image
+
+docker images -f dangling=true --> To list the dangling images
+docker imge prune --> To remove all the dangling images
+----------------------------------------------------------------------------------------------------------
+Assignment:
+Copy files from a running container to host machine and vice versa
+----------------------------------------------------------------------------------------------------------
+Docker Multi Stage:
+
+One of the most challenging things about building images is keeping the image size down. 
+The docker multi-stage builds are a way of organizing Dockerfile to minimize the size of the 
+final docker image, container and ultimately improve the performance of the container.
+
+In a multi-stage build we will have multiple FROM instructions in a single Dockerfile and each FROM instruction 
+begins a new stage. We can selectively copy artifacts from one stage to another.
+
+Basically, instead of keeping all the unnecessary supported libraries, dependency files etc. 
+using multi-stage builds we can discord all these components to make our application light and less vulnerable.
+----------------------------------------------------------------------------------------------------------
+Example-Tomcat: [https://github.com/artisantek/java-example]
+
+FROM maven:amazoncorretto as build
+WORKDIR /app
+COPY . .
+RUN mvn clean install
+
+FROM adhig93/tomcat-conf
+COPY --from=build /app/target/*.war /usr/local/tomcat/webapps/
+----------------------------------------------------------------------------------------------------------
+Example-Java: [https://github.com/artisantek/docker-multistagebuild-java]
+
+FROM maven:amazoncorretto as build
+WORKDIR /java
+COPY . .
+RUN mvn clean install
+
+FROM openjdk:9
+WORKDIR /app
+COPY --from=build /java/target/gs-maven-0.1.0.jar app.jar
+CMD ["java", "-jar", "app.jar"]
+----------------------------------------------------------------------------------------------------------
+Docker Networks:
+
+1. Bridge [--network bridge]
+ 
+The default network driver of Docker is Docker Bridge and the network name is Docker0. By
+default, all the containers created without specific network configuration during Docker Run
+will be attached to the default network
+To access these containers from outside we need to map the ports using publish during
+Docker run
+
+2. Host Network [--network host]
+
+Host network will remove any network isolation between the docker host and the containers.
+For instance, if you run a container on port 5000, it will be accessible on the same port on the docker host 
+without any explicit port mapping. The containers also don’t get their own ip-address.
+
+Host network is generally used for single container nodes as it provides high performance. It
+is also used when we have to map large number of ports to the container.
+
+3. Null Network [--network none]
+
+the None network keeps the container in complete isolation, i.e. they are not connected to
+any network or container.
+One use case might be to run batch jobs which are scheduled programs that are assigned to
+run without further interaction from outside world.
+
+docker network ls --> To list all the networks
+docker network create <network-name> --> To create a Docker network
+docker network rm <network-name> --> To delete a network
+
+docker run --network <network-name> <image-name> --> Create a container inside a custom network
+
+docker network connect <network-name> <container-name>/<container-id> -->To create a connection between a container and a network
+
+docker network disconnect <network-name> <container-name>/<container-id> -->To remove a connection between a container and a network
+----------------------------------------------------------------------------------------------------------
+Docker-Compose
+
+Docker Compose is used to run multiple containers as a single service. With Docker compose
+file we can start all the required containers as a service without the need to start each one of
+them separately.
+
+Commands:
+
+docker-compose up --> To start the services
+docker-compose up -d --> To start the services in background
+docker-compose up -f <file-name> --> To use a specific file
+docker-compose ps --> To list the services managed by docker-compose
+docker-compose down --> To bring down the services
+
+Installation:
+sudo apt install docker-compose
+
+Git Link:
+https://github.com/artisantek/docker-compose-votingapp
+
+Resource Limits:
+
+1. Memory
+
+Command:
+
+docker run --memory 500m <image-name> --> To set a memory limit for the container
+
+Memory Reservation
+
+Command:
+
+docker run --memory 500m --memory-reservation <image-name> 
+
+2. CPU
+
+docker run --cpus="05" <image-name> --> To set a cpu limit for the container
