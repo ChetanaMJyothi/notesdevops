@@ -1,0 +1,76 @@
+To install Docker 
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh ./get-docker.sh --dry-run
+sudo usermod -aG docker ubuntu
+Q. To view all Environmnet variables passed through a file can be viewed using a command: export -p --> inside a container
+
+Q. similar to Docker?
+RancherOS, PhotonOS, and Containers by Docker.
+
+Q. Containerization?
+Container technology involves building software packages that perform consistently, regardless of the machines they run on.
+ Containers only package the resources required to run a single application.
+
+Q. Diff between virtulization and containers?
+Virtual amchines:
+1. Applications running on a hypervisor, can run different OS.
+2. VM size is very large,
+3. VM takes longer to run than containers,
+4. VM virtualizes the computer system, meaning its hardware.
+5. VM is more secure, as the underlying hardware isn’t shared between processes.
+
+Container:
+1. While applications running in a container environment share a single OS.
+2. While the size of the container is very light,
+3. While containers take far less time to run.
+4. While containers virtualize the operating system, or the software only.
+5. While containers are less secure, as the virtualization is software-based, and memory is shared.
+
+aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 811137303802.dkr.ecr.ap-south-1.amazonaws.com/repochetana
+
+Q. WORKDIR instruction is used to set the working directory for all the subsequent Dockerfile instructions.  
+The WORKDIR instruction in a Dockerfile is used to set the working directory for any RUN, CMD, ENTRYPOINT, COPY, and ADD instructions that follow it in the 
+Dockerfile. It allows you to change the current working directory for the duration of the Dockerfile.
+
+Q. EXPOSE instruction is used to inform Docker that container listens at a specified port number, it is used only for inter-container communication 
+which are on same host
+FROM ubuntu:latest
+EXPOSE 80/tcp
+EXPOSE 80/udp
+-p will do both expose and publish
+It is not compulsory,its for documentation purpose, to tell on which ports container listens.
+[expose creates internal communication, -p creates external connection previously, now its changed] ---> old one
+
+Q. USER:
+You can change or switch to a different user inside a Docker Container using the USER Instruction. For this, you first need to create a user and a group inside the Container.
+FROM ubuntu:latest
+RUN apt-get -y update
+RUN groupadd -r user && useradd -r -g user user
+USER user
+
+Q. SHELL:
+The SHELL instruction allows the default shell used for the shell form of commands to be overridden. The default shell on Linux is ["/bin/sh", "-c"], 
+and on Windows is ["cmd", "/S", "/C"]. 
+The SHELL instruction must be written in JSON form in a Dockerfile.
+The -c flag is a command option used by Bash (Bourne Again SHell) to run a command specified as its argument.
+SHELL ["/bin/bash", "-c"]
+
+Q. differnce between -p and -P in docker commands
+		-p (lowercase):
+Syntax: -p <host-port>:<container-port>[/protocol]
+docker run -p 8080:80 my-web-app
+This option allows you to manually specify the port mapping between the host machine and the container.
+For example, to map port 8080 on the host to port 80 on the container, you would use: -p 8080:80.
+		-P (uppercase):
+This option is used to automatically map all exposed ports in the container to random ports on the host.
+docker run -P my-web-app
+
+Q. How to copy files from host machine to running container? 
+docker cp /home/ubuntu/dir1/file1 5310a6a379f2:/dir/
+5310a6a379f2 -->container ID
+
+Q. Where intermediate images will be stored?
+in local , use docker images -a
+
+Q. Docker is written on GO language
+aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 811137303802.dkr.ecr.ap-south-1.amazonaws.com
