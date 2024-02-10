@@ -13,5 +13,67 @@ buildByToken/build?job=RevolutionTest&token=TacoTuesday
 2. Role based authorization strategy?
 3. fanin plugin --> To maintain upstream downstream jobs
 
+Q. jenkins Home dir?
+/var/lib/jenkins
 
-http://13.233.246.128:8080/buildByToken/build?job=demo_one&token=chetu
+Q. Default No of executors for Master node is 2, Quite period is 5 seconds
+
+Q. Default jekins port : 8080
+
+Q. Email configuration?
+Under System we have extended email notification
+
+Q. Different types of jobs in jenkins?
+	Freestyle jobs: Classic, general-purpose job type that checks out from up to one SCM, executes build steps serially, followed by post-build steps like 
+								archiving artifacts and sending email notifications.
+	Pipeline: 	Suitable for building pipelines (formerly known as workflows) and/or organizing complex activities that do not easily fit in free-style job type.
+	Multi-configuration project: Suitable for projects that need a large number of different configurations, such as testing on multiple environments, 
+													platform-specific builds, etc.
+	Multibranch Pipeline: Creates a set of Pipeline projects according to detected branches in one SCM repository.
+	Organization folder: Creates a set of multibranch project subfolders by scanning for repositories.
+	Maven Jobs:
+	
+Q. Where we craete credentails?
+	Manage jenkins >> Credentails >> System >> Global credentails
+ 
+ Q. Jenkins Best Practices?
+ 1. Always create a backup of the Jenkins Home Directory, Thin Backup Plugin, Periodic Backup Plugin
+ 2. Create a Scalable Jenkins Pipeline: Shared Libraries are the apex of adoption. Compared to a standard programming library, 
+		shared libraries provide version-controlled Pipeline code
+ 3. Using RBAC
+	Global roles, Item roles, Agent roles
+ 4. Distribute load through Master Agent
+ 5. Mange Credentials through credential binder plugin
+ 
+ Q. Jenkins Challenges?
+ -Configuration Management: Managing and configuring Jenkins can be challenging, especially when dealing with large and complex projects
+ -Plugins that go out of date can cause issues when we upgrades jenkins server.
+ -Troubleshooting is hard as some plugins have bad error handling.
+ -Console output doesn't provide proper exact error message.
+ -Since everything is depending on plugin, some plugins may be malicious and bring threat to jenkins , since it is open source platform.
+ 
+ Q. Troubleshoot Jenkins?
+ Jenkins fails to start or displays errors during startup:
+	Check the Jenkins logs (JENKINS_HOME/logs) for any error messages
+	Verify that the required Java version is installed and properly configured.
+	Check if there are any port conflicts with other services running on the machine.
+	Ensure that the file system has sufficient disk space available.
+Build failures or job execution problems:
+	Review the console output of the failed build for any error messages or stack traces.
+	Check the job configuration for any misconfigured build steps or parameters.
+	Verify that the required plugins and dependencies are installed and up to date.
+Connectivity issues with Jenkins agents or nodes:
+	Verify that the agents are registered and online in the Jenkins master.
+Plugin-related problems:
+	Check if the plugins are installed and up to date. Update or reinstall them if needed.
+	Disable or remove conflicting plugins that may cause compatibility issues.
+Performance optimization:
+		Monitor system resource usage (CPU, memory, disk I/O) and scale the Jenkins environment accordingly.
+		Consider using distributed builds to offload the workload to multiple agents or nodes.
+		
+Q. Error in execution of pipeline jobs?
+	1.Java mismatch error
+	2.Nodes not getting connected
+	3.build timeout
+	4.Jenkins has no access to certain files or folders
+	5. mistake inconfiguration of plugins
